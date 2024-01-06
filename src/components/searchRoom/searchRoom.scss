@@ -1,0 +1,71 @@
+@import "../../sass/var/variables.scss";
+
+.search_room {
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0px 5px 12px rgb(211 211 211);
+
+  .content {
+    form {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      .input {
+        width: 100%;
+        input,
+        select {
+          background-color: transparent;
+          width: 100%;
+          max-width: 400px;
+          border: 1px solid rgb(202, 202, 202);
+          border-radius: 8px;
+          outline: none;
+          padding: 10px 13px;
+
+          &:focus {
+            border: 1px solid $primary-color;
+          }
+        }
+      }
+
+      .btn_submit {
+        padding: 10px 20px;
+        width: 100%;
+        border-radius: 8px;
+        background-color: $primary-color;
+        color: white;
+        max-width: 200px;
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .search_room {
+    padding: 18px;
+
+    .content {
+      form {
+        flex-wrap: wrap;
+        .input {
+          input,
+          select {
+            max-width: 100%;
+            padding: 7px 10px;
+            font-size: 14px;
+            border-radius: 5px;
+          }
+        }
+
+        .btn_submit {
+          max-width: 100%;
+          padding: 6px 10px;
+          font-size: 15px;
+          border-radius: 5px;
+        }
+      }
+    }
+  }
+}

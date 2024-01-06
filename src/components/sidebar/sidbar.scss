@@ -1,0 +1,51 @@
+@import "../../sass/var/variables.scss";
+
+.sidbar {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  width: 300px;
+  height: 100%;
+  background-color: white;
+  color: black;
+  z-index: 1000;
+  transition: all 0.4s ease;
+  &.show {
+    left: 0;
+  }
+
+  .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+
+  .links {
+    padding: 15px;
+    .link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+
+      &.active {
+        color: $primary-color;
+      }
+
+      h4 {
+        font-size: 21px;
+      }
+    }
+  }
+}
+
+.overflow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.507);
+  z-index: 999;
+}
