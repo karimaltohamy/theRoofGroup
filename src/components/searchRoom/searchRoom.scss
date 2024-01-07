@@ -11,6 +11,13 @@
       align-items: center;
       gap: 12px;
 
+      .download {
+        padding: 12px;
+        border-radius: 8px;
+        background-color: $primary-color;
+        color: white;
+      }
+
       .input {
         width: 100%;
         input,

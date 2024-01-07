@@ -2,7 +2,7 @@ import React from "react";
 import "./sidbar.scss";
 import { MdOutlineFileUpload } from "react-icons/md";
 import { Link, NavLink } from "react-router-dom";
-import { IoClose } from "react-icons/io5";
+import { IoClose, IoHomeOutline } from "react-icons/io5";
 
 const Sidbar = ({ openSidebar, setOpenSidbar }) => {
   return (
@@ -18,6 +18,16 @@ const Sidbar = ({ openSidebar, setOpenSidbar }) => {
         <h2 className="text-[30px] font-semibold">Sidebar</h2>
       </div>
       <div className="links mt-5">
+        <NavLink
+          to={"/"}
+          className={({ isActive }) => (isActive ? "active link" : "link")}
+          onClick={() => setOpenSidbar(false)}
+        >
+          <div className="icon">
+            <IoHomeOutline size={30} />
+          </div>
+          <h4>Home</h4>
+        </NavLink>
         <NavLink
           to={"/add-room"}
           className={({ isActive }) => (isActive ? "active link" : "link")}

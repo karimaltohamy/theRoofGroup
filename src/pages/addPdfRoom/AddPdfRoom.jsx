@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { MdOutlineFileUpload, MdOutlineFileDownload } from "react-icons/md";
 import "./addPdfRoom.scss";
+import { Worker, Viewer } from "@react-pdf-viewer/core";
+import ResizableRect from "react-resizable-rotatable-draggable";
 
 const AddPdfRoom = () => {
   const [pdf, setPdf] = useState("");
@@ -8,6 +10,44 @@ const AddPdfRoom = () => {
   const [floorNumber, setFoorNumber] = useState("");
   const [rooms, setRooms] = useState("");
   const [openRooms, setOpenRooms] = useState(false);
+  const [rectangles, setRectangles] = useState([
+    { id: 1, left: 0, top: 40, width: 100, height: 100, rotateAngle: 0 },
+    { id: 2, left: 120, top: 40, width: 100, height: 100, rotateAngle: 0 },
+  ]);
+
+  const handleResize = (style, isShiftKey, type, id) => {
+    let updatedRectangles = rectangles.map((rect) =>
+      rect.id === id
+        ? {
+            ...rect,
+            top: Math.round(style.top),
+            left: Math.round(style.left),
+            width: Math.round(style.width),
+            height: Math.round(style.height),
+          }
+        : rect
+    );
+
+    setRectangles(updatedRectangles);
+  };
+
+  const handleRotate = (rotateAngle, id) => {
+    let updatedRectangles = rectangles.map((rect) =>
+      rect.id === id ? { ...rect, rotateAngle } : rect
+    );
+
+    setRectangles(updatedRectangles);
+  };
+
+  const handleDrag = (deltaX, deltaY, id) => {
+    let updatedRectangles = rectangles.map((rect) =>
+      rect.id === id
+        ? { ...rect, left: rect.left + deltaX, top: rect.top + deltaY }
+        : rect
+    );
+
+    setRectangles(updatedRectangles);
+  };
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -31,29 +71,65 @@ const AddPdfRoom = () => {
   return (
     <div className="add_pdf_room ">
       <div className="px-4 md:px-8">
-        <div className={`section_upload ${!pdf && "h-[500px]"}`}>
-          <div className="btns">
-            <label htmlFor="pdf" className="btn flex">
-              <div className="icon">
-                <MdOutlineFileUpload />
-              </div>
-              <span>Upload PDF</span>
-              <input
-                type="file"
-                id="pdf"
-                accept="application/pdf"
-                className="hidden"
-                onChange={handleFileChange}
-              />
-            </label>
+        {!openRooms && (
+          <div className={`section_upload ${!pdf && "h-[500px]"}`}>
+            <div className="btns">
+              <label htmlFor="pdf" className="btn flex">
+                <div className="icon">
+                  <MdOutlineFileUpload />
+                </div>
+                <span>Upload PDF</span>
+                <input
+                  type="file"
+                  id="pdf"
+                  accept="application/pdf"
+                  className="hidden"
+                  onChange={handleFileChange}
+                />
+              </label>
+              <button className="btn">
+                <div className="icon">
+                  <MdOutlineFileDownload />
+                </div>
+                <span>Download PDF</span>
+              </button>
+            </div>
+          </div>
+        )}
+        {openRooms && (
+          <div className="section_shaps">
             <button className="btn">
               <div className="icon">
                 <MdOutlineFileDownload />
               </div>
               <span>Download PDF</span>
             </button>
+            <div className="shaps relative">
+              {rectangles &&
+                rectangles.map((rect) => (
+                  <ResizableRect
+                    key={rect.id}
+                    left={rect.left}
+                    top={rect.top}
+                    width={rect.width}
+                    height={rect.height}
+                    rotateAngle={rect.rotateAngle}
+                    zoomable="n, w, s, e, nw, ne, se, sw"
+                    onRotate={(rotateAngle) =>
+                      handleRotate(rotateAngle, rect.id)
+                    }
+                    onResize={(style, isShiftKey, type) =>
+                      handleResize(style, isShiftKey, type, rect.id)
+                    }
+                    onDrag={(deltaX, deltaY) =>
+                      handleDrag(deltaX, deltaY, rect.id)
+                    }
+                    style={{ zIndex: 10000 }}
+                  />
+                ))}
+            </div>
           </div>
-        </div>
+        )}
         {pdf && (
           <div className="line grid md:grid-cols-4 grid-cols-1 my-5 gap-6">
             <div className="show_pdf md:col-span-3">

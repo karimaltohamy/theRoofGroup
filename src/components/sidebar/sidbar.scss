@@ -28,6 +28,10 @@
       gap: 10px;
       font-weight: 600;
 
+      &:not(:last-child) {
+        margin-bottom: 12px;
+      }
+
       &.active {
         color: $primary-color;
       }

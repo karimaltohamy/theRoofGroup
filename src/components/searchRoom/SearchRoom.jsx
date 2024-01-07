@@ -1,11 +1,19 @@
 import React from "react";
 import "./searchRoom.scss";
+import { MdOutlineFileDownload } from "react-icons/md";
+import { useLocation } from "react-router-dom";
 
 const SearchRoom = () => {
+  const { pathname } = useLocation();
   return (
     <div className="search_room mt-4 md:mt-8">
       <div className="content">
         <form>
+          {pathname.includes("room-details") && (
+            <div className="download">
+              <MdOutlineFileDownload size={25} />
+            </div>
+          )}
           <div className="input">
             <select>
               <option value="">Choose City</option>
